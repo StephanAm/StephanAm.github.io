@@ -3,6 +3,7 @@ import NavBar from './components/NavBar';
 import Api from './api';
 import ShoeList from "./components/ShoeList";
 import CartSummary from "./components/CartSummary";
+import Facet from './components/Facet';
 class App extends Component {
 
   /**
@@ -46,7 +47,7 @@ class App extends Component {
         <div className="row">
 
           <div className="col s3">
-            I am the left pane
+            <Facet/>
           </div>
 
           <div className="col s6">
