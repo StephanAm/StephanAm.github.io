@@ -15,7 +15,8 @@ class App extends Component {
     super(props);
     this.state = {
       shoes:[],
-      cart:[]
+      cart:[],
+      facetSelected:null
     };
   }
 
@@ -24,8 +25,14 @@ class App extends Component {
    *  - Api.getShoes() returns a promise
    *  - this.setState() might be useful
    * */
+  initStock(shoes)
+  {
+    this.setState({
+      shoes:shoes
+    });
+  }
   componentDidMount() {
-    Api.getShoes().then(shoes=>(this.setState({shoes:shoes})))
+    Api.getShoes().then(shoes=>(this.initStock(shoes)));
   }
 
   handleShoeSelect (shoe) {
@@ -35,6 +42,10 @@ class App extends Component {
       this.setState({cart:newCart});
   }
 
+  handleFacetSelect(facet)
+  {
+
+  }
   render() {
     const onShoeSelect= (shoe) =>{
         this.handleShoeSelect(shoe);
@@ -47,7 +58,7 @@ class App extends Component {
         <div className="row">
 
           <div className="col s3">
-            <Facet/>
+            <Facet items={this.state.shoes}/>
           </div>
 
           <div className="col s6">
