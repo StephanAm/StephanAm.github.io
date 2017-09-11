@@ -2,7 +2,9 @@ import React from 'react';
 import Shoe from './Shoe';
 
 const ShoeList = (props) => (
-  <div>ShoeList</div>
+  <div>ShoeList
+    {props.shoes.map(s=>(<Shoe key = {s.id} {...s}/>))}
+  </div>
 );
 
 ShoeList.propTypes = {
