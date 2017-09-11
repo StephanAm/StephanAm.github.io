@@ -3,7 +3,7 @@ import Shoe from './Shoe';
 
 const ShoeList = (props) => (
   <div>ShoeList
-    {props.shoes.map(s=>(<Shoe key = {s.id} {...s}/>))}
+    {props.shoes.map(s=>(<Shoe key={s.id} onShoeSelect={props.onShoeSelect} {...s}/>))}
   </div>
 );
 

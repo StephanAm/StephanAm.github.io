@@ -2,6 +2,8 @@ import React from 'react';
 
 const Shoe = (props) => (
   <div>
+    <a href="#" onClick={()=>props.onShoeSelect(props)}>Add to basket</a>
+  
     Shoe <br/>
     Name: {props.name} <br/>
     Brand: {props.brand} <br/>

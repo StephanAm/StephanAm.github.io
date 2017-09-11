@@ -28,10 +28,16 @@ class App extends Component {
   }
 
   handleShoeSelect (shoe) {
-
+      console.log("HandleSelect");
+      var newCart = this.state.cart.slice();
+      newCart.push(shoe);
+      this.setState({cart:newCart});
   }
 
   render() {
+    const onShoeSelect= (shoe) =>{
+        this.handleShoeSelect(shoe);
+    };
     return (
       <div>
 
@@ -44,7 +50,7 @@ class App extends Component {
           </div>
 
           <div className="col s6">
-            <ShoeList shoes={this.state.shoes}/>
+            <ShoeList onShoeSelect={onShoeSelect} shoes={this.state.shoes}/>
           </div>
 
           <div className="col s3">
