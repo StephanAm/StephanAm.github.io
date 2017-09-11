@@ -37,6 +37,7 @@ describe('countByKey', () => {
 
   it('should return an array of objects sorted by the count', () => {
     const result = countByKey(mockShoes, 'brand');
+
     expect(result[0].count).toBeGreaterThanOrEqual(result[1].count);
     expect(result[1].count).toBeGreaterThanOrEqual(result[2].count);
   });
@@ -45,6 +46,7 @@ describe('countByKey', () => {
 describe('Facet', () => {
   it('should render an <li> for each unique brand', () => {
     const wrapper = shallow(<Facet items={mockShoes}/>);
+    console.log(wrapper.find("FacetOption").length);
     expect(wrapper.find('li').length).toEqual(3);
   });
 
@@ -70,17 +72,19 @@ describe('Facet', () => {
 describe('App', () => {
   it('should contain a <Facet /> component', () => {
     const wrapper = shallow(<App/>);
-    expect(wrapper.find(<Facet items={mockShoes}/>).length).toEqual(1);
+    expect(wrapper.find(Facet).length).toEqual(1);
   });
 
   it('should have `state.facetSelected` that equals null', () => {
-    // WRITE THIS TEST!
-    return false;
+    const wrapper = shallow(<App />);
+    expect(wrapper.state()).not.toBeNull;
+    expect(Object.keys(wrapper.state())).toContain('facetSelected');
+    expect(wrapper.state().facetSelected).toBeNull();
   });
 
   it('should have an instance method called `handleFacetSelect`', () => {
-    // WRITE THIS TEST!
-    return false;
+    const wrapper = shallow(<App/>);
+    expect(wrapper.instance().handleFacetSelect).toBeInstanceOf(Function);
   });
 
   it('the instance method should update `state.facetSelected`', () => {

@@ -36,6 +36,5 @@ export function countByKey (arr, key) {
         entry["count"]=dict[val];
         result.push(entry);
     });  
-    console.log(result);
     return result;
 }

@@ -2,7 +2,13 @@ import React from 'react';
 import {countByKey} from '../utils';
 
 const Facet = (props) => (
-  <div>Facet</div>
+  <div>
+    Facet
+    <ul>
+      {countByKey(props.items,'brand').map(i=>(<li>{i.brand} ({i.count})</li>))}
+    </ul>
+
+  </div>
 );
 
 Facet.propTypes = {
