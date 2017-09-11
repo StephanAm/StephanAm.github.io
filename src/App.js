@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import NavBar from './components/NavBar';
 import Api from './api';
-
+import ShoeList from "./components/ShoeList";
+import CartSummary from "./components/CartSummary";
 class App extends Component {
 
   /**
@@ -11,6 +12,10 @@ class App extends Component {
    * */
   constructor(props) {
     super(props);
+    this.state = {
+      shoes:[],
+      cart:[]
+    };
   }
 
   /**
@@ -19,7 +24,7 @@ class App extends Component {
    *  - this.setState() might be useful
    * */
   componentDidMount() {
-
+    Api.getShoes().then(shoes=>(this.setState({shoes:shoes})))
   }
 
   handleShoeSelect (shoe) {
@@ -39,11 +44,11 @@ class App extends Component {
           </div>
 
           <div className="col s6">
-            I am in the middle
+            <ShoeList shoes={this.state.shoes}/>
           </div>
 
           <div className="col s3">
-            Right?
+            <CartSummary cart={this.state.cart}/>
           </div>
 
         </div>
