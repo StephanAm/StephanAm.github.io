@@ -1,6 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import Facet from '../src/components/Facet';
+import Shoe from '../src/components/Shoe';
 import App from '../src/App';
 import {countByKey} from '../src/utils';
 
@@ -88,27 +89,44 @@ describe('App', () => {
   });
 
   it('the instance method should update `state.facetSelected`', () => {
-    // WRITE THIS TEST!
-    return false;
+    const wrapper = shallow(<App/>);
+    var oldFacetSelected = wrapper.state().facetSelected;
+    wrapper.instance().handleFacetSelect({brand:"dummy brand"});
+    var newFacetSelected = wrapper.state().facetSelected;
+    expect(newFacetSelected).not.toEqual(oldFacetSelected);
   });
 
   it('the instance method should update `state.facetSelected` to null if a shoe is selected already (toggle off)', () => {
-    // WRITE THIS TEST!
-    return false;
+    const dummyFacet = {brand:"dummy brand"};
+    const wrapper = shallow(<App/>);
+    expect(wrapper.state().facetSelected).toBeNull();
+    wrapper.instance().handleFacetSelect(dummyFacet);
+    expect(wrapper.state().facetSelected).not.toBeNull();
+    wrapper.instance().handleFacetSelect(dummyFacet);
+    expect(wrapper.state().facetSelected).toBeNull();
   });
 
   it('the <Facet /> component should be passed `handleSelect` as a prop', () => {
-    // WRITE THIS TEST!
-    return false;
+    const wrapper = shallow(<App/>);
+    const facetProps = wrapper.find(Facet).props();
+    expect(Object.keys(facetProps)).toContain('onFacetSelect');
+    expect(facetProps.onFacetSelect).toBeInstanceOf(Function);
   });
 
   it('the list of shoes display should be filter based on the facet selected', () => {
-    // WRITE THIS TEST! THIS IS THE MAIN ONE
-    return false;
+    const wrapper = shallow(<App/>);
+    wrapper.setState({shoes:mockShoes});
+    expect(wrapper.state().shoes.length).toEqual(mockShoes.length);
+    wrapper.instance().handleFacetSelect({brand:"Reebok"});
+    expect(wrapper.state().displayShoes.length).toEqual(2);
   });
-
-  it('the list of shoes display should be filter based on the facet selected', () => {
-    // WRITE THIS TEST! THIS IS THE MAIN ONE
-    return false;
+  it("the list of shoes displayed should contain all shoes if same facet is selected again",()=>{
+    const wrapper = shallow(<App/>);
+    wrapper.setState({shoes:mockShoes});
+    expect(wrapper.state().shoes.length).toEqual(mockShoes.length);
+    wrapper.instance().handleFacetSelect({brand:"Reebok"});
+    expect(wrapper.state().displayShoes.length).toBeLessThan(mockShoes.length);
+    wrapper.instance().handleFacetSelect({brand:"Reebok"});
+    expect(wrapper.state().displayShoes.length).toEqual(mockShoes.length);
   });
 });

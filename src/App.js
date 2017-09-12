@@ -15,6 +15,7 @@ class App extends Component {
     super(props);
     this.state = {
       shoes:[],
+      displayShoes:[],
       cart:[],
       facetSelected:null
     };
@@ -28,7 +29,8 @@ class App extends Component {
   initStock(shoes)
   {
     this.setState({
-      shoes:shoes
+      shoes:shoes,
+      displayShoes:shoes
     });
   }
   componentDidMount() {
@@ -41,12 +43,36 @@ class App extends Component {
       newCart.push(shoe);
       this.setState({cart:newCart});
   }
-
+  updateDisplayShoes(facetSelected)
+  {
+    if(facetSelected == null){
+      this.setState({displayShoes:this.state.shoes});
+    }
+    else{
+      var displayShoes = this.state.shoes.filter((shoe)=>(shoe.brand==facetSelected.brand));
+      this.setState({displayShoes:displayShoes});
+      }
+  }
   handleFacetSelect(facet)
   {
-
+    var currentFacet = this.state.facetSelected;
+    var newFacet;
+    if(currentFacet == null){
+      newFacet=facet;
+    }
+    else if (currentFacet.brand == facet.brand){
+      newFacet=null;    
+    }
+    else{
+      newFacet = facet;
+    }
+    this.updateDisplayShoes(newFacet);
+    this.setState({facetSelected:newFacet});
   }
   render() {
+    const onFacetSelect = (facet) => {
+      this.handleFacetSelect(facet);
+    }
     const onShoeSelect= (shoe) =>{
         this.handleShoeSelect(shoe);
     };
@@ -58,11 +84,11 @@ class App extends Component {
         <div className="row">
 
           <div className="col s3">
-            <Facet items={this.state.shoes}/>
+            <Facet onFacetSelect={onFacetSelect} items={this.state.shoes}/>
           </div>
 
           <div className="col s6">
-            <ShoeList onShoeSelect={onShoeSelect} shoes={this.state.shoes}/>
+            <ShoeList onShoeSelect={onShoeSelect} shoes={this.state.displayShoes}/>
           </div>
 
           <div className="col s3">
