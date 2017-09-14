@@ -6,7 +6,11 @@ const Cart = (props) => {
   return (
     <div className="Cart">
       <ul>
-        {props.items.map((i,x)=>(<li onClick={()=>(props.onRemoveItem(x))}>{i.brand}>{i.name}</li>))}
+        {props.items.map((i,x)=>(
+          <li onClick={()=>(props.onRemoveItem(x))}>
+            {i.brand}>{i.name}
+            <a>X</a>
+          </li>))}
       </ul>
     </div>
   )

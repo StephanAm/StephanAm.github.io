@@ -58,7 +58,6 @@ describe('Cart', () => {
     const wrapper = shallow(<Cart items={mockCart}/>);
     var listItems = wrapper.find('li');
     listItems.forEach((i)=>{
-      console.log(i.find('a').length);
       expect(i.find('a').length).toEqual(1);
     });
   });
