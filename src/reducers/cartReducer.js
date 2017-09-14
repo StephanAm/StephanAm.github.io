@@ -1,4 +1,4 @@
-const cartReducer = (state={},action) =>{
+const cartReducer = function(state={},action){
     return state;
 }
 
