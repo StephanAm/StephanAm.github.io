@@ -23,9 +23,14 @@ describe('Redux Store', ()=>{
     });
     it("should init with an empty array called 'cart'",()=>{
       var state = createStore(rootReducer).getState();
-      //expect(Object.keys(state)).toContain("cart");
+      expect(Object.keys(state)).toContain("cart");
       expect(state.cart).toBeInstanceOf(Array);
       expect(state.cart.length).toEqual(0);
-      
+    });
+    it("should init with an empty array called 'shoes'",()=>{
+      var state = createStore(rootReducer).getState();
+      expect(Object.keys(state)).toContain("shoes");
+      expect(state.shoes).toBeInstanceOf(Array);
+      expect(state.shoes.length).toEqual(0);
     });
 });
