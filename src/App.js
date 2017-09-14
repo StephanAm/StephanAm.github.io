@@ -72,22 +72,22 @@ class App extends Component {
         <div className="navbar-fixed">
         <NavBar title={AppName}/>
         </div>
-          <div className="row">
-            <div className="col s3">
-              
-                <Facet onFacetSelect={this.handleFacetSelect} items={this.state.shoes}/>
-              </div>
-
-            <div className="col s6">
-              <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes} facet={this.state.facetSelected}/>
+        <div className="row">
+          <div className="col s3">
+            
+              <Facet onFacetSelect={this.handleFacetSelect} items={this.state.shoes}/>
             </div>
 
-            <div className="col s3">
-              <CartSummary cart={this.state.cart}/>
-              <Cart onRemoveItem={this.handleCartRemove} items={this.state.cart}/>
-            </div>
-
+          <div className="col s6">
+            <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes} facet={this.state.facetSelected}/>
           </div>
+
+          <div className="col s3">
+            <CartSummary cart={this.state.cart}/>
+            <Cart onRemoveItem={this.handleCartRemove} items={this.state.cart}/>
+          </div>
+
+        </div>
       </div>
 
     );

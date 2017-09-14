@@ -3,7 +3,7 @@ import {countByKey} from '../utils';
 
 const Facet = (props) => (
   <div>
-    <div className="card">
+    <div className="card blue-grey">
     <ul>
       {countByKey(props.items,'brand').map((i,ix)=>(
         <li key={ix} onClick={()=>props.onFacetSelect(i)}>
