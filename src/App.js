@@ -5,6 +5,8 @@ import ShoeList from "./components/ShoeList";
 import CartSummary from "./components/CartSummary";
 import Cart from "./components/Cart";
 import Facet from './components/Facet';
+const AppName = "React - Shoe Store!";
+const AppRootKey = AppName.toLowerCase().replace(/[^(a-z)]/g,"");
 
 class App extends Component {
 
@@ -13,19 +15,34 @@ class App extends Component {
     this.state = {
       shoes:[],
       displayShoes:[],
-      cart:[],
+      cart:this.getCachedCart(),
       facetSelected:null
     };
     this.handleCartRemove = this.handleCartRemove.bind(this);
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
     this.handleFacetSelect = this.handleFacetSelect.bind(this);
   }
-
+  getCachedCart()
+  {
+    const cachedCart = localStorage.getItem(AppRootKey+"cart");
+    if(cachedCart)
+    {
+      return JSON.parse(cachedCart);
+    }
+    return [];
+  }
+  handleCartAdd(shoe)
+  {
+    var newCart = this.state.cart.slice();
+    newCart.push(shoe);
+    localStorage.setItem(AppRootKey+"cart",JSON.stringify(newCart));
+    this.setState({cart:newCart});
+  }
   handleCartRemove(index)
   {
-      console.log("handeleCartRemove("+index+")");
       var newCart = this.state.cart.slice();
       newCart.splice(index,1);
+      localStorage.setItem(AppRootKey+"cart",JSON.stringify(newCart));
       this.setState({cart:newCart});
   }
   initStock(shoes)
@@ -40,10 +57,7 @@ class App extends Component {
   }
 
   handleShoeSelect (shoe) {
-      console.log("HandleSelect");
-      var newCart = this.state.cart.slice();
-      newCart.push(shoe);
-      this.setState({cart:newCart});
+    this.handleCartAdd(shoe);
   }
   updateDisplayShoes(facetSelected)
   {
@@ -76,7 +90,7 @@ class App extends Component {
     return (
       <div>
         <div className="navbar-fixed">
-        <NavBar title="Hello World"/>
+        <NavBar title={AppName}/>
         </div>
         <div className="row">
           <div className="col s3">
