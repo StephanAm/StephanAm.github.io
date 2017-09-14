@@ -3,3 +3,4 @@ import {createStore} from 'redux';
 const initStore =() => {
     return createStore(rootReducer);
 }
+export default initStore
