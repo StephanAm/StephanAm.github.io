@@ -5,7 +5,6 @@ import ShoeList from "./components/ShoeList";
 import CartSummary from "./components/CartSummary";
 import Cart from "./components/Cart";
 import Facet from './components/Facet';
-import {CreateStore} from 'redux';
 
 const AppName = "React - Shoe Store!";
 const AppRootKey = AppName.toLowerCase().replace(/[^(a-z)]/g,"");
@@ -17,9 +16,10 @@ class App extends Component {
     this.state = {
       shoes:[],
       displayShoes:[],
-      cart:this.getCachedCart(),
+      cart:[],
       facetSelected:null
     };
+    this.storage = null;
     this.handleCartRemove = this.handleCartRemove.bind(this);
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
     this.handleFacetSelect = this.handleFacetSelect.bind(this);
@@ -37,14 +37,18 @@ class App extends Component {
   {
     var newCart = this.state.cart.slice();
     newCart.push(shoe);
-    localStorage.setItem(AppRootKey+"cart",JSON.stringify(newCart));
+    if(this.storage){
+      this.storage.setItem(AppRootKey+"cart",JSON.stringify(newCart));
+    }
     this.setState({cart:newCart});
   }
   handleCartRemove(index)
   {
       var newCart = this.state.cart.slice();
       newCart.splice(index,1);
-      localStorage.setItem(AppRootKey+"cart",JSON.stringify(newCart));
+      if(this.storage){
+        this.storage.setItem(AppRootKey+"cart",JSON.stringify(newCart));
+      }
       this.setState({cart:newCart});
   }
   initStock(shoes)
@@ -56,6 +60,8 @@ class App extends Component {
   }
   componentDidMount() {
     Api.getShoes().then(shoes=>(this.initStock(shoes)));
+    this.setState({cart:this.getCachedCart()});
+    this.storage = localStorage;
   }
 
   handleShoeSelect (shoe) {
