@@ -73,7 +73,7 @@ class App extends Component {
         <NavBar title={AppName}/>
         </div>
           <div className="row">
-            <div className="col s3 fixed-col">
+            <div className="col s3">
               
                 <Facet onFacetSelect={this.handleFacetSelect} items={this.state.shoes}/>
               </div>
@@ -82,7 +82,7 @@ class App extends Component {
               <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes} facet={this.state.facetSelected}/>
             </div>
 
-            <div className="col s3 fixed-col">
+            <div className="col s3">
               <CartSummary cart={this.state.cart}/>
               <Cart onRemoveItem={this.handleCartRemove} items={this.state.cart}/>
             </div>
