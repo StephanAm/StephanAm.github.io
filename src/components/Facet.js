@@ -5,7 +5,13 @@ const Facet = (props) => (
   <div>
     <div className="card">
     <ul>
-      {countByKey(props.items,'brand').map(i=>(<li onClick={()=>props.onFacetSelect(i)}>{i.brand} ({i.count})</li>))}
+      {countByKey(props.items,'brand').map((i,ix)=>(
+        <li key={ix} onClick={()=>props.onFacetSelect(i)}>
+          <div className="chip">
+          {i.brand} ({i.count})
+          </div>
+        </li>
+          ))}
     </ul>
     </div>
   </div>

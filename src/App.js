@@ -34,8 +34,6 @@ class App extends Component {
   {
     if(this.storage){
       key=AppRootKey+"."+key;
-      console.log("saving "+key);
-      console.log(data);
       localStorage.setItem(key,JSON.stringify(data));
     }
   }

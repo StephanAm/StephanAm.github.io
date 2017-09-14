@@ -11,6 +11,9 @@ const cartReducer = function(state=[],action){
             break;
         case "CART_SET":
             state = action.payload.slice();
+            break;
+        default:
+            break;
     }
     return state;
 }

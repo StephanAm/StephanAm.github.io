@@ -1,16 +1,17 @@
 import React from 'react';
 
 const Cart = (props) => {
-  var ItemCount = props.items.length;
-  var TotalCost = props.items.map(s=>s.price).reduce((a,b)=>a+b,0);
   return (
-    <div className="card">
-      <div className="Cart">
+    <div className="Cart">
+      <div className="card blue-gray darken-1">
+    
       <ul>
         {props.items.map((i,x)=>(
-          <li>
-            {i.brand}>{i.name}
+          <li key={x}>
+            <div className="chip">
             <a onClick={()=>(props.onRemoveItem(x))}>X</a>
+            {i.brand}>{i.name}
+            </div>
           </li>))}
       </ul>
       </div>
