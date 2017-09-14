@@ -3,14 +3,11 @@ import NavBar from './components/NavBar';
 import Api from './api';
 import ShoeList from "./components/ShoeList";
 import CartSummary from "./components/CartSummary";
+import Cart from "./components/Cart";
 import Facet from './components/Facet';
+
 class App extends Component {
 
-  /**
-   * TIP:
-   *  - this.state = {...}
-   *  - this.someFunction = this.someFunction.bind(this)
-   * */
   constructor(props) {
     super(props);
     this.state = {
@@ -19,13 +16,18 @@ class App extends Component {
       cart:[],
       facetSelected:null
     };
+    this.handleCartRemove = this.handleCartRemove.bind(this);
+    this.handleShoeSelect = this.handleShoeSelect.bind(this);
+    this.handleFacetSelect = this.handleFacetSelect.bind(this);
   }
 
-  /**
-   * TIP:
-   *  - Api.getShoes() returns a promise
-   *  - this.setState() might be useful
-   * */
+  handleCartRemove(index)
+  {
+      console.log("handeleCartRemove("+index+")");
+      var newCart = this.state.cart.slice();
+      newCart.splice(index,1);
+      this.setState({cart:newCart});
+  }
   initStock(shoes)
   {
     this.setState({
@@ -70,29 +72,26 @@ class App extends Component {
     this.setState({facetSelected:newFacet});
   }
   render() {
-    const onFacetSelect = (facet) => {
-      this.handleFacetSelect(facet);
-    }
-    const onShoeSelect= (shoe) =>{
-        this.handleShoeSelect(shoe);
-    };
+    
     return (
       <div>
-
+        <div className="navbar-fixed">
         <NavBar title="Hello World"/>
-
+        </div>
         <div className="row">
-
           <div className="col s3">
-            <Facet onFacetSelect={onFacetSelect} items={this.state.shoes}/>
+            <div className="sidebar">
+              <Facet onFacetSelect={this.handleFacetSelect} items={this.state.shoes}/>
+            </div>
           </div>
 
           <div className="col s6">
-            <ShoeList onShoeSelect={onShoeSelect} shoes={this.state.displayShoes}/>
+            <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.displayShoes}/>
           </div>
 
           <div className="col s3">
             <CartSummary cart={this.state.cart}/>
+            <Cart onRemoveItem={this.handleCartRemove} items={this.state.cart}/>
           </div>
 
         </div>
