@@ -1,11 +1,16 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {reducer} from '../src/reducers';
+import rootReducer from '../src/reducers';
+import cartReducer from '../src/reducers';
 //qimport {combineReducers} from 'redux';
 
-describe('reducer', () => {
-    it("should be a a 'redux' reducer",()=>{
-        var test = combineReducers({});
-        expect(typeof combineReducers).toEqual(typeof test);
+describe('rootReducer', () => {
+    it("should be a function",()=>{
+        expect(rootReducer).toBeInstanceOf(Function);
+    });
+});
+describe('cartReducer',()=>{
+    it("should be a function",()=>{
+        expect(cartReducer).toBeInstanceOf(Function);
     });
 });
