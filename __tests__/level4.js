@@ -61,5 +61,12 @@ describe('Cart', () => {
       expect(i.find('a').length).toEqual(1);
     });
   });
-
+  it("should call the function passed as 'onRemoveItem' when the <a> is clicked",()=>{
+    const removeSpy = jest.fn();
+    const wrapper = shallow(<Cart items={mockCart} onRemoveItem={removeSpy}/>);
+    expect(removeSpy.mock.calls.length).toEqual(0);
+    var listItems = wrapper.find('li');
+    listItems.forEach((i)=>{i.find('a').first().simulate('click');});
+    expect(removeSpy.mock.calls.length).toEqual(mockCart.length);
+  });
 });
