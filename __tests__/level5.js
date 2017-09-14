@@ -21,4 +21,11 @@ describe('Redux Store', ()=>{
         var store = createStore(rootReducer);
         expect(store).isNotNull;
     });
+    it("should init with an empty array called 'cart'",()=>{
+      var state = createStore(rootReducer).getState();
+      //expect(Object.keys(state)).toContain("cart");
+      expect(state.cart).toBeInstanceOf(Array);
+      expect(state.cart.length).toEqual(0);
+      
+    });
 });
