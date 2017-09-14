@@ -3,8 +3,7 @@ import {shallow} from 'enzyme';
 import rootReducer from '../src/reducers';
 import cartReducer from '../src/reducers';
 import {createStore} from 'redux';
-//qimport {combineReducers} from 'redux';
-
+import initStore from '../src/store';
 describe('rootReducer', () => {
     it("should be a function",()=>{
         expect(rootReducer).toBeInstanceOf(Function);
