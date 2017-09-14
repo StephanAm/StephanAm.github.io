@@ -9,6 +9,7 @@ describe('rootReducer', () => {
         expect(rootReducer).toBeInstanceOf(Function);
     });
 });
+
 describe('cartReducer',()=>{
     it("should be a function",()=>{
         expect(cartReducer).toBeInstanceOf(Function);
@@ -20,12 +21,14 @@ describe('Redux Store', ()=>{
         var store = createStore(rootReducer);
         expect(store).isNotNull;
     });
+
     it("should init with an empty array called 'cart'",()=>{
       var state = createStore(rootReducer).getState();
       expect(Object.keys(state)).toContain("cart");
       expect(state.cart).toBeInstanceOf(Array);
       expect(state.cart.length).toEqual(0);
     });
+
     it("should init with an empty array called 'shoes'",()=>{
       var state = createStore(rootReducer).getState();
       expect(Object.keys(state)).toContain("shoes");
@@ -33,12 +36,6 @@ describe('Redux Store', ()=>{
       expect(state.shoes.length).toEqual(0);
     });
     
-    it("should init with an empty array called 'displayShoes'",()=>{
-        var state = createStore(rootReducer).getState();
-        expect(Object.keys(state)).toContain("displayShoes");
-        expect(state.displayShoes).toBeInstanceOf(Array);
-        expect(state.displayShoes.length).toEqual(0);
-      });
     it("should init with an 'null' property called 'facetSelected'",()=>{
         var state = createStore(rootReducer).getState();
         expect(Object.keys(state)).toContain("facetSelected");
