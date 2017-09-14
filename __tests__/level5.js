@@ -33,4 +33,11 @@ describe('Redux Store', ()=>{
       expect(state.shoes).toBeInstanceOf(Array);
       expect(state.shoes.length).toEqual(0);
     });
+    
+    it("should init with an empty array called 'displayShoes'",()=>{
+        var state = createStore(rootReducer).getState();
+        expect(Object.keys(state)).toContain("displayShoes");
+        expect(state.displayShoes).toBeInstanceOf(Array);
+        expect(state.displayShoes.length).toEqual(0);
+      });
 });
