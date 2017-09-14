@@ -40,4 +40,9 @@ describe('Redux Store', ()=>{
         expect(state.displayShoes).toBeInstanceOf(Array);
         expect(state.displayShoes.length).toEqual(0);
       });
+    it("should init with an 'null' property called 'facetSelected'",()=>{
+        var state = createStore(rootReducer).getState();
+        expect(Object.keys(state)).toContain("facetSelected");
+        expect(state.facetSelected).toBeNull();
+      });
 });
