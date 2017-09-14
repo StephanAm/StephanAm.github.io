@@ -5,6 +5,7 @@ import ShoeList from "./components/ShoeList";
 import CartSummary from "./components/CartSummary";
 import Cart from "./components/Cart";
 import Facet from './components/Facet';
+import {CreateStore} from 'redux';
 const AppName = "React - Shoe Store!";
 const AppRootKey = AppName.toLowerCase().replace(/[^(a-z)]/g,"");
 
