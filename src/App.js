@@ -6,6 +6,7 @@ import CartSummary from "./components/CartSummary";
 import Cart from "./components/Cart";
 import Facet from './components/Facet';
 
+import initStore from './store';
 const AppName = "React - Shoe Store!";
 const AppRootKey = AppName.toLowerCase().replace(/[^(a-z)]/g,"");
 
@@ -13,12 +14,14 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+    this.store = initStore();
+    this.state = this.store.getState();
+/*    this.state = {
       shoes:[],
       displayShoes:[],
       cart:[],
       facetSelected:null
-    };
+    };*/
     this.storage = null;
     this.handleCartRemove = this.handleCartRemove.bind(this);
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
@@ -53,10 +56,9 @@ class App extends Component {
   }
   initStock(shoes)
   {
-    this.setState({
-      shoes:shoes,
-      displayShoes:shoes
-    });
+    
+    this.store.dispatch({type:"SHOES_SET",payload:shoes})
+    this.setState(this.store.getState());
   }
   componentDidMount() {
     Api.getShoes().then(shoes=>(this.initStock(shoes)));
@@ -67,30 +69,11 @@ class App extends Component {
   handleShoeSelect (shoe) {
     this.handleCartAdd(shoe);
   }
-  updateDisplayShoes(facetSelected)
-  {
-    if(facetSelected == null){
-      this.setState({displayShoes:this.state.shoes});
-    }
-    else{
-      var displayShoes = this.state.shoes.filter((shoe)=>(shoe.brand==facetSelected.brand));
-      this.setState({displayShoes:displayShoes});
-      }
-  }
+
   handleFacetSelect(facet)
   {
-    var currentFacet = this.state.facetSelected;
-    var newFacet;
-    if(currentFacet == null){
-      newFacet=facet;
-    }
-    else if (currentFacet.brand == facet.brand){
-      newFacet=null;    
-    }
-    else{
-      newFacet = facet;
-    }
-    this.updateDisplayShoes(newFacet);
+    this.store.dispatch({type:"FACET_SELECT",payload:facet});
+    var newFacet = this.store.getState().facetSelected;
     this.setState({facetSelected:newFacet});
   }
   render() {
@@ -108,7 +91,7 @@ class App extends Component {
           </div>
 
           <div className="col s6">
-            <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.displayShoes}/>
+            <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes} facet={this.state.facetSelected}/>
           </div>
 
           <div className="col s3">

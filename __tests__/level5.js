@@ -56,4 +56,12 @@ describe('Redux Store', ()=>{
         store.dispatch({type:"FACET_SELECT",payload:dummyFacet});
         expect(store.getState().facetSelected).toBeNull();
     });
+    it("should update the content of the 'shoe' field on the 'SHOES_SET' action type",()=>{
+        var store = createStore(rootReducer);
+        var dummyArray = [1,2,3,4,5,6];
+        expect(store.getState().shoes.length).toEqual(0);
+        store.dispatch({type:'SHOES_SET',payload:dummyArray});
+        expect(store.getState().shoes.length).toEqual(dummyArray.length);
+        
+    });
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import {shallow,dive} from 'enzyme';
 import Facet from '../src/components/Facet';
 import Shoe from '../src/components/Shoe';
 import App from '../src/App';
@@ -13,7 +13,7 @@ const mockShoes = [
   { id: 'e', brand: 'Reebok', name: 'Classic White', price: 1999.99 },
   { id: 'f', brand: 'Adidas', name: 'Ultra Boost', price: 1500.00 }
 ];
-
+ 
 describe('countByKey', () => {
 
   it('should return an array', () => {
@@ -47,7 +47,6 @@ describe('countByKey', () => {
 describe('Facet', () => {
   it('should render an <li> for each unique brand', () => {
     const wrapper = shallow(<Facet items={mockShoes}/>);
-    console.log(wrapper.find("FacetOption").length);
     expect(wrapper.find('li').length).toEqual(3);
   });
 
@@ -115,18 +114,28 @@ describe('App', () => {
 
   it('the list of shoes display should be filter based on the facet selected', () => {
     const wrapper = shallow(<App/>);
-    wrapper.setState({shoes:mockShoes});
+
+    wrapper.instance().initStock(mockShoes);
     expect(wrapper.state().shoes.length).toEqual(mockShoes.length);
+    expect(wrapper.find("ShoeList").dive().find("Shoe").length).toEqual(mockShoes.length);
+    
     wrapper.instance().handleFacetSelect({brand:"Reebok"});
-    expect(wrapper.state().displayShoes.length).toEqual(2);
+    expect(wrapper.state().shoes.length).toEqual(mockShoes.length);
+    expect(wrapper.find("ShoeList").dive().find("Shoe").length).toEqual(2);
   });
   it("the list of shoes displayed should contain all shoes if same facet is selected again",()=>{
     const wrapper = shallow(<App/>);
-    wrapper.setState({shoes:mockShoes});
+
+    wrapper.instance().initStock(mockShoes);
     expect(wrapper.state().shoes.length).toEqual(mockShoes.length);
+    expect(wrapper.find("ShoeList").dive().find("Shoe").length).toEqual(mockShoes.length);
+    
     wrapper.instance().handleFacetSelect({brand:"Reebok"});
-    expect(wrapper.state().displayShoes.length).toBeLessThan(mockShoes.length);
+    expect(wrapper.state().shoes.length).toEqual(mockShoes.length);
+    expect(wrapper.find("ShoeList").dive().find("Shoe").length).toEqual(2);
+
     wrapper.instance().handleFacetSelect({brand:"Reebok"});
-    expect(wrapper.state().displayShoes.length).toEqual(mockShoes.length);
+    expect(wrapper.state().shoes.length).toEqual(mockShoes.length);
+    expect(wrapper.find("ShoeList").dive().find("Shoe").length).toEqual(mockShoes.length);
   });
 });
