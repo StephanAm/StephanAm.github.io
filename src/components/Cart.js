@@ -2,8 +2,8 @@ import React from 'react';
 
 const Cart = (props) => {
   return (
+    <div className="card blue-grey">
     <div className="Cart">
-      <div className="card blue-gray darken-1">
     
       <ul>
         {props.items.map((i,x)=>(
