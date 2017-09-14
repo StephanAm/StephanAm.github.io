@@ -41,12 +41,9 @@ describe('App', () => {
   it('`handleShoeSelect()` should add the item to `state.cart`', () => {
     const wrapper = shallow(<App/>);
     const mockShoe = {name: 'Air Max 1000'};
-    console.log("A");
     expect(wrapper.state().cart.length).toEqual(0);
-    console.log("B");
     wrapper.instance().handleShoeSelect(mockShoe);
     expect(wrapper.state().cart).toContain(mockShoe);
-    console.log("C");
   });
 
 });

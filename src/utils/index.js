@@ -19,7 +19,6 @@
 export function countByKey (arr, key) {
     var result = [];
     var dict = {};
-    var count = key.length;
     arr.forEach(function(element,i) {
         var val = element[key];
         if(val){
