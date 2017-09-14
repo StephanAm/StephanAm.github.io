@@ -7,9 +7,9 @@ const Cart = (props) => {
     <div className="Cart">
       <ul>
         {props.items.map((i,x)=>(
-          <li onClick={()=>(props.onRemoveItem(x))}>
+          <li>
             {i.brand}>{i.name}
-            <a>X</a>
+            <a onClick={()=>(props.onRemoveItem(x))}>X</a>
           </li>))}
       </ul>
     </div>
