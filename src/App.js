@@ -21,22 +21,33 @@ class App extends Component {
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
     this.handleFacetSelect = this.handleFacetSelect.bind(this);
   }
-  getCachedCart()
+  getCachedItem(key,defaultVal)
   {
-    const cachedCart = localStorage.getItem(AppRootKey+"cart");
-    if(cachedCart)
+    const cachedItem = localStorage.getItem(AppRootKey+"."+key);
+    if(cachedItem)
     {
-      return JSON.parse(cachedCart);
+      return JSON.parse(cachedItem);
+    } 
+    return defaultVal;
+  }
+  CacheItem(key,data)
+  {
+    if(this.storage){
+      key=AppRootKey+"."+key;
+      console.log("saving "+key);
+      console.log(data);
+      localStorage.setItem(key,JSON.stringify(data));
     }
-    return [];
   }
   handleCartAdd(shoe)
   {
     this.store.dispatch({type:"CART_ADD",payload:shoe});
+    this.CacheItem("cart",this.getState().cart);
   }
   handleCartRemove(index)
   {
     this.store.dispatch({type:"CART_REMOVE",payload:index});
+    this.CacheItem("cart",this.getState().cart);
   }
   initStock(shoes)
   {
@@ -45,6 +56,7 @@ class App extends Component {
   componentDidMount() {
     Api.getShoes().then(shoes=>(this.initStock(shoes)));
     this.storage = localStorage;
+    this.store.dispatch({type:"CART_SET",payload:this.getCachedItem("cart",[])});  
   }
 
   handleShoeSelect (shoe) {
@@ -62,23 +74,22 @@ class App extends Component {
         <div className="navbar-fixed">
         <NavBar title={AppName}/>
         </div>
-        <div className="row">
-          <div className="col s3">
-            <div className="sidebar">
-              <Facet onFacetSelect={this.handleFacetSelect} items={this.state.shoes}/>
+          <div className="row">
+            <div className="col s3 fixed-col">
+              
+                <Facet onFacetSelect={this.handleFacetSelect} items={this.state.shoes}/>
+              </div>
+
+            <div className="col s6">
+              <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes} facet={this.state.facetSelected}/>
             </div>
-          </div>
 
-          <div className="col s6">
-            <ShoeList onShoeSelect={this.handleShoeSelect} shoes={this.state.shoes} facet={this.state.facetSelected}/>
-          </div>
+            <div className="col s3 fixed-col">
+              <CartSummary cart={this.state.cart}/>
+              <Cart onRemoveItem={this.handleCartRemove} items={this.state.cart}/>
+            </div>
 
-          <div className="col s3">
-            <CartSummary cart={this.state.cart}/>
-            <Cart onRemoveItem={this.handleCartRemove} items={this.state.cart}/>
           </div>
-
-        </div>
       </div>
 
     );

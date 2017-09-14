@@ -4,7 +4,8 @@ const Cart = (props) => {
   var ItemCount = props.items.length;
   var TotalCost = props.items.map(s=>s.price).reduce((a,b)=>a+b,0);
   return (
-    <div className="Cart">
+    <div className="card">
+      <div className="Cart">
       <ul>
         {props.items.map((i,x)=>(
           <li>
@@ -12,6 +13,7 @@ const Cart = (props) => {
             <a onClick={()=>(props.onRemoveItem(x))}>X</a>
           </li>))}
       </ul>
+      </div>
     </div>
   )
 };
