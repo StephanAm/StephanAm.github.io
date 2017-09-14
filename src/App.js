@@ -14,14 +14,8 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.store = initStore();
+    this.store = initStore(this);
     this.state = this.store.getState();
-/*    this.state = {
-      shoes:[],
-      displayShoes:[],
-      cart:[],
-      facetSelected:null
-    };*/
     this.storage = null;
     this.handleCartRemove = this.handleCartRemove.bind(this);
     this.handleShoeSelect = this.handleShoeSelect.bind(this);
@@ -38,31 +32,18 @@ class App extends Component {
   }
   handleCartAdd(shoe)
   {
-    var newCart = this.state.cart.slice();
-    newCart.push(shoe);
-    if(this.storage){
-      this.storage.setItem(AppRootKey+"cart",JSON.stringify(newCart));
-    }
-    this.setState({cart:newCart});
+    this.store.dispatch({type:"CART_ADD",payload:shoe});
   }
   handleCartRemove(index)
   {
-      var newCart = this.state.cart.slice();
-      newCart.splice(index,1);
-      if(this.storage){
-        this.storage.setItem(AppRootKey+"cart",JSON.stringify(newCart));
-      }
-      this.setState({cart:newCart});
+    this.store.dispatch({type:"CART_REMOVE",payload:index});
   }
   initStock(shoes)
   {
-    
     this.store.dispatch({type:"SHOES_SET",payload:shoes})
-    this.setState(this.store.getState());
   }
   componentDidMount() {
     Api.getShoes().then(shoes=>(this.initStock(shoes)));
-    this.setState({cart:this.getCachedCart()});
     this.storage = localStorage;
   }
 
@@ -73,8 +54,6 @@ class App extends Component {
   handleFacetSelect(facet)
   {
     this.store.dispatch({type:"FACET_SELECT",payload:facet});
-    var newFacet = this.store.getState().facetSelected;
-    this.setState({facetSelected:newFacet});
   }
   render() {
     
