@@ -45,4 +45,16 @@ describe('Redux Store', ()=>{
         expect(Object.keys(state)).toContain("facetSelected");
         expect(state.facetSelected).toBeNull();
       });
+    it("should change the facetSelected when on the 'FACET_SELECT' action type",()=>{
+        var store = createStore(rootReducer);
+        var dummyFacet = {brand:"brandX"};
+        expect(store.getState().facetSelected).toBeNull();
+        
+        store.dispatch({type:"FACET_SELECT",payload:dummyFacet});
+        expect(store.getState().facetSelected).not.toBeNull();
+        expect(store.getState().facetSelected.brand).toEqual(dummyFacet.brand);
+        
+        store.dispatch({type:"FACET_SELECT",payload:dummyFacet});
+        expect(store.getState().facetSelected).toBeNull();
+    });
 });
